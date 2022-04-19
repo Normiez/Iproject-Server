@@ -28,6 +28,8 @@ const errHandler = (err, req, res, next) => {
     res.status(403).json({ message: "FORBIDDEN" });
   } else if (err.message === "POST_NOT_FOUND") {
     res.status(404).json({ message: "Post not found" });
+  } else if (err.message === "ROLE_INVALID") {
+    res.status(400).json({ message: "Role invalid" });
   } else {
     res.json(err.message); //ganti jadi 500
   }

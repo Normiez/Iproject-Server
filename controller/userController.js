@@ -49,6 +49,9 @@ class UserController {
       if (!role) {
         throw new Error("ROLE_REQUIRED");
       }
+      if(role !== "customer" && role !== "seller"){
+        throw new Error("ROLE_INVALID")
+      }
       await createUserWithEmailAndPassword(auth, email, password);
       await User.create({
         email,
