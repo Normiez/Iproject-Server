@@ -4,6 +4,8 @@ const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  GoogleAuthProvider,
+  signInWithCredential,
 } = require("firebase/auth");
 const { signToken } = require("../helpers/jwt");
 const auth = getAuth(firebase);
@@ -57,6 +59,25 @@ class UserController {
     } catch (err) {
       next(err);
     }
+  }
+  static async googleAuth(req, res, next) {
+    try {
+      const { id_token } = req.body;
+      const credential = GoogleAuthProvider.credential(id_token);
+      const result = await signInWithCredential(auth, credential);
+      res.status(200).json(result); // belom kelar
+    } catch (err) {
+      next(err);
+    }
+  }
+  static signOut(req, res, next) {
+    signOut(auth)
+      .then(() => {
+        res.status(200).json({ message: "Logout success" });
+      })
+      .catch((error) => {
+        next(error);
+      });
   }
 }
 

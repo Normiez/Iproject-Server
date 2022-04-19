@@ -25,7 +25,7 @@ const errHandler = (err, req, res, next) => {
   ) {
     res.status(401).json({ message: "Invalid token" });
   } else {
-    res.json(err.name);
+    res.json(err.message);
   }
 };
 
