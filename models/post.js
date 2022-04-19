@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Price is required" },
         },
       },
+      fileLocation: DataTypes.STRING,
       sellerId: DataTypes.INTEGER,
     },
     {

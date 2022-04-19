@@ -24,8 +24,10 @@ const errHandler = (err, req, res, next) => {
     err.name === "JsonWebTokenError"
   ) {
     res.status(401).json({ message: "Invalid token" });
+  } else if (err.message === "FORBIDDEN") {
+    res.status(403).json({ message: "FORBIDDEN" });
   } else {
-    res.json(err.message);
+    res.json(err.message); //ganti jadi 500
   }
 };
 

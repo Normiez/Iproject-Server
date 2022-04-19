@@ -23,6 +23,9 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
+      fileLocation: {
+        type: Sequelize.STRING,
+      },
       sellerId: {
         type: Sequelize.INTEGER,
         references: {
