@@ -19,6 +19,7 @@ class UserController {
     try {
       const { email, password, role } = req.body;
       const data = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(data);
     } catch (err) {
       next(err);
     }

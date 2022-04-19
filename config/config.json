@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "Iproject_BookWorm",
+    "database": "Xborg-Iproject",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
