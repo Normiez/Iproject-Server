@@ -56,6 +56,12 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: "Price is required" },
           notEmpty: { msg: "Price is required" },
         },
+        get: function () {
+          return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(this.getDataValue("price"));
+        },
       },
       fileLocation: DataTypes.STRING,
       sellerId: DataTypes.INTEGER,

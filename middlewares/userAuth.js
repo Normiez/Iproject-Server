@@ -14,10 +14,8 @@ const auth = async (req, res, next) => {
       email: payload.email,
       role: respond.role,
     };
-    console.log("lewat");
     next();
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

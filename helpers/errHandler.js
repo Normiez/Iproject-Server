@@ -26,6 +26,8 @@ const errHandler = (err, req, res, next) => {
     res.status(401).json({ message: "Invalid token" });
   } else if (err.message === "FORBIDDEN") {
     res.status(403).json({ message: "FORBIDDEN" });
+  } else if (err.message === "POST_NOT_FOUND") {
+    res.status(404).json({ message: "Post not found" });
   } else {
     res.json(err.message); //ganti jadi 500
   }
