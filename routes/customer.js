@@ -4,6 +4,6 @@ const CustomerController = require("../controller/customerController");
 const auth = require("../middlewares/userAuth");
 const authorization = require("../middlewares/authorizationCust");
 
-customerRouter.post("/", auth, authorization, CustomerController.buy);
+customerRouter.post("/:postId", auth, authorization, CustomerController.buy);
 
 module.exports = customerRouter;
