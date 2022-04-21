@@ -9,9 +9,10 @@ class CustomerController {
       if (!respond || respond.length < 1) {
         throw new Error("POST_NOT_FOUND");
       }
+      const extId = respond.title.split(" ").join("-");
       const money = parseInt(respond.price.replace(/,.*|[^0-9]/g, ""), 10);
       const resp = await xendit.createInvoice({
-        externalID: respond.title + "_" + Date.now(),
+        externalID: extId + "_" + Date.now(),
         amount: money,
         description: respond.title,
         invoice_duration: 86400,
@@ -21,6 +22,7 @@ class CustomerController {
         userId: id,
         status: resp.status,
         invoiceUrl: resp.invoice_url,
+        externalID: resp.external_id,
       });
       res.status(201).json({ newCart });
     } catch (err) {
@@ -30,7 +32,17 @@ class CustomerController {
 
   static async confirmed(req, res, next) {
     try {
-      
+      const { status, external_id } = req.body;
+      const respond = await Cart.findOne({
+        where: { externalID: external_id },
+      });
+
+      await Cart.update(
+        {
+          status,
+        },
+        { where: { id: respond.id } }
+      );
     } catch (err) {
       next(err);
     }

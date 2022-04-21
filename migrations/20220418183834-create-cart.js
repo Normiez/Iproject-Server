@@ -32,6 +32,9 @@ module.exports = {
       invoiceUrl: {
         type: Sequelize.STRING,
       },
+      externalID: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -31,7 +31,7 @@ const errHandler = (err, req, res, next) => {
   } else if (err.message === "ROLE_INVALID") {
     res.status(400).json({ message: "Role invalid" });
   } else {
-    res.json(err.message); //ganti jadi 500
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

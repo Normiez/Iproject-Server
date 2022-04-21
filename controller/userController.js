@@ -4,8 +4,6 @@ const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  GoogleAuthProvider,
-  signInWithCredential,
 } = require("firebase/auth");
 const { signToken } = require("../helpers/jwt");
 const auth = getAuth(firebase);
@@ -63,16 +61,6 @@ class UserController {
         address,
       });
       res.status(201).json({ message: "User created" });
-    } catch (err) {
-      next(err);
-    }
-  }
-  static async googleAuth(req, res, next) {
-    try {
-      const { id_token } = req.body;
-      const credential = GoogleAuthProvider.credential(id_token);
-      const result = await signInWithCredential(auth, credential);
-      res.status(200).json(result); // belom kelar
     } catch (err) {
       next(err);
     }
