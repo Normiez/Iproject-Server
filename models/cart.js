@@ -14,11 +14,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   Cart.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       postId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
       status: DataTypes.STRING,
       invoiceUrl: DataTypes.STRING,
-      externalID: DataTypes.STRING
+      externalID: DataTypes.STRING,
     },
     {
       sequelize,
