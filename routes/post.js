@@ -6,6 +6,7 @@ const auth = require("../middlewares/userAuth");
 const authorization = require("../middlewares/authorization");
 
 postRouter.get("/", PostConntroller.fetchAllData)
+postRouter.get("/wares", auth, authorization, PostConntroller.fetchDataByUserId)
 postRouter.post("/upload", upload, auth, authorization, PostConntroller.postUpload);
 postRouter.get("/:postId", PostConntroller.fetchPostId)
 postRouter.delete("/:postId", auth, authorization, PostConntroller.postDelete);

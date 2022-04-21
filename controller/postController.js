@@ -1,4 +1,5 @@
 const { User, Post, Cart } = require("../models/index");
+const { Op } = require("sequelize");
 const firebase = require("../config/firebaseConfig");
 const {
   getStorage,
@@ -83,13 +84,58 @@ class PostConntroller {
       next(err);
     }
   }
-  static async fetchAllData(req,res,next){
-      try {
-          const respond = await Post.findAll()
-          res.status(200).json(respond)
-      } catch (err) {
-          next(err)
+  static async fetchAllData(req, res, next) {
+    try {
+      let size = 21;
+      let page = (req.query.page - 1) * size || 0;
+      if (page < 0 || isNaN(page) || page === undefined) {
+        throw new Error("PAGE_NOT_FOUND");
       }
+
+      const { search } = req.query;
+      let option;
+      if (search) {
+        option = {
+          where: {
+            title: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          limit: size,
+          offset: page,
+          order: [["createdAt", "DESC"]],
+        };
+      } else {
+        option = {
+          limit: size,
+          offset: page,
+          order: [["createdAt", "DESC"]],
+        };
+      }
+
+      const respond = await Post.findAll(option);
+      res.status(200).json(respond);
+    } catch (error) {
+      if (error.message === "PAGE_NOT_FOUND") {
+        next({ code: 404, message: "Page Not Found" });
+      } else {
+        next({ code: 500 });
+      }
+    }
+  }
+  static async fetchDataByUserId(req, res, next) {
+    try {
+      const { id } = req.userData;
+      const respond = await Post.findAll({
+        where: {
+          sellerId: id,
+        },
+        order: [["createdAt", "DESC"]],
+      });
+      res.json(respond);
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

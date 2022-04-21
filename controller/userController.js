@@ -35,7 +35,11 @@ class UserController {
         email: userCredential.user.email,
         uid: userCredential.user.uid,
       });
-      res.status(200).json({ access_token: token });
+      res.status(200).json({
+        access_token: token,
+        email: userCredential.user.email,
+        role: respond.role,
+      });
     } catch (err) {
       next(err);
     }
@@ -49,8 +53,8 @@ class UserController {
       if (!role) {
         throw new Error("ROLE_REQUIRED");
       }
-      if(role !== "customer" && role !== "seller"){
-        throw new Error("ROLE_INVALID")
+      if (role !== "customer" && role !== "seller") {
+        throw new Error("ROLE_INVALID");
       }
       await createUserWithEmailAndPassword(auth, email, password);
       await User.create({
